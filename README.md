@@ -38,4 +38,4 @@ make up/build
 
 ## Accessing Web Application
 
-To access the web application, navigate to `http://localhost:8000` in your web browser.
+To access the web application, navigate to `https://localhost` in your web browser.

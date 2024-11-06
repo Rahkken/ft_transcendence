@@ -13,6 +13,13 @@
 {% block body %}
 	<div>
 		<h1 style="margin-bottom: 30px;">Edit Page</h1>
+		<form id="2faToggleForm">
+			{% csrf_token %}
+			<button type="button" style="margin-bottom: 10px;" id="toggle2faButton" onclick="toggle2FA()">
+				{% if status_2fa %}Disable 2FA{% else %}Enable 2FA{% endif %}
+			</button>
+			<p style="margin-bottom: 20px;" id="toggleMessage"></p>
+		</form>
 		<form hx-post="{% url 'users:profile_edit' %}" hx-encoding="multipart/form-data" hx-target="#app-body">
 			{% csrf_token %}
 			{{ u_form | crispy }}
@@ -27,6 +34,6 @@
 			</button>
 		</a>
 	</div>
-
+	<script src="{% static 'js/2fa.js' %}"></script>
 {% endblock %}
 

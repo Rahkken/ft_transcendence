@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from .models import FriendList, FriendRequest
+from .models import FriendList, FriendRequest, Profile
 from .utils import Oauth42, get_friend_request_or_false
 from .friend_request_status import FriendRequestStatus
 from django.contrib.auth import login, logout
@@ -267,8 +267,10 @@ Settings page for editing user info
 """
 @login_required(login_url='/users/login/?redirected=true')
 def editprofile(request) -> HttpResponse:
+    profile = Profile.objects.get(user=request.user)
     context = {
         'request': request,
+        'status_2fa': profile.status_2fa,
     }
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)

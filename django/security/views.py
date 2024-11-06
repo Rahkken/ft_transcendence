@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from users.models import Profile
+from django.http import JsonResponse
 
 def vulnerable_view(request):
     user_id = request.GET.get('user_id', '')
@@ -45,3 +48,12 @@ def csrf_view(request):
         return render(request, 'security/csrf_2.html', {'new_password': new_password})
     
     return render(request, 'security/csrf.html', {'current_password': current_password})
+
+@login_required
+def toggle_2fa(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    profile.status_2fa = not profile.status_2fa
+    profile.save()
+
+    return JsonResponse({'status': profile.status_2fa})

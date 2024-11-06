@@ -16,6 +16,7 @@ class Profile(models.Model):
     active = models.BooleanField(default=False)
     description = models.CharField(default=pick_random_description())
     blocklist = models.ManyToManyField(User, blank=True, related_name="blocklist")
+    status_2fa = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user.username} Profile'
