@@ -13,3 +13,4 @@ channels
 
 argon2-cffi
 hvac
+sendgrid

@@ -19,6 +19,11 @@ from django.template.loader import render_to_string
 from render_block import render_block_to_string
 from django.middleware.csrf import get_token
 from game.models import LeaderboardEntry
+from django.core.mail import send_mail
+from django.conf import settings
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+import random
 
 # Load environment variables
 load_dotenv()
@@ -73,15 +78,55 @@ def login_v(request) -> HttpResponse:
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            user.profile.active = True
-            login(request, user)
-            context['request'] = request
-            return render(request, 'home/welcome.html', context)
+            if user.profile.status_2fa:
+                otp = random.randint(100000, 999999)
+                request.session['otp'] = otp
+                request.session['user_id'] = user.id
+
+                message = Mail(
+                    from_email=settings.SENDGRID_EMAIL,
+                    to_emails=user.email,
+                    subject='Your OTP Code',
+                    html_content=f'<strong>Your OTP code is {otp}</strong>'
+                )
+                try:
+                    sg = SendGridAPIClient(api_key=settings.SENDGRID_API_KEY)
+                    sg.send(message)
+                except Exception as e:
+                    print(f"Error sending email: {e}")
+                    render(request, 'users/login.html', context)
+
+                return redirect('users:verify_otp')
+
+            else:
+                user.profile.active = True
+                login(request, user)
+                context['request'] = request
+                return render(request, 'home/welcome.html', context)
     else:
         form = AuthenticationForm()
     context['form'] = form
     return render(request, 'users/login.html', context)
 
+@require_http_methods(['GET', 'POST'])
+def verify_otp(request) -> HttpResponse:
+    error = None
+    if request.method == 'POST':
+        user_otp = request.POST.get('otp')
+        session_otp = request.session.get('otp')
+        user_id = request.session.get('user_id')
+
+        if user_otp and session_otp and int(user_otp) == session_otp:
+            user = User.objects.get(id=user_id)
+            user.profile.active = True
+            login(request, user)
+            del request.session['otp']
+            del request.session['user_id']
+            return redirect('home:welcome')
+        else:
+            error = 'Invalid OTP. Please try again.'
+
+    return render(request, 'users/verify_otp.html', {'error': error})
 
 """
 Callback for Oauth2 logic

@@ -187,3 +187,6 @@ LOGGING = {
         },
     },
 }
+
+SENDGRID_API_KEY = secrets['data']['data']['SENDGRID_API_KEY']
+SENDGRID_EMAIL = secrets['data']['data']['SENDGRID_EMAIL']
