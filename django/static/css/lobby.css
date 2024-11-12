@@ -6,6 +6,6 @@
     justify-content: center; /* Center elements vertically */
     text-align: center; /* Ensure text is centered */
     margin: auto;
-    width: 50%; /* Control the width of the lobby menu */
+    width: 25%; /* Control the width of the lobby menu */
     padding: 20px;
 }

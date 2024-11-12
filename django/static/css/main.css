@@ -1,38 +1,51 @@
 /* GLOBAL SETTINGS */
 
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap'); /* Import de la police Press Start 2P */
+
 * {
     padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 :root {
-    --main-bg-color: #0A1A2A; /* Body background color from styles.css */
-    --secondary-bg-color: rgba(10, 26, 42, 0.9); /* Header background color */
-    --bg-layer1: #0A1A2A; /* Using body background color */
-    --bg-layer2: #0A1A2A; /* Using body background color */
-    --text-color: #F1F1F1; /* Text color from styles.css */
-    --accent: #00ADEF; /* Accent color from styles.css */
-    --accent-hover: #007EA7; /* Hover accent color from styles.css */
-    --alert: #ED4245; /* Retained original alert color */
+    --main-bg-color: #1A1A1D; /* Noir profond */
+    --secondary-bg-color: #2D2D34; /* Fond gris foncé */
+    --bg-layer1: #1A1A1D; /* Couche de fond principale */
+    --bg-layer2: #2D2D34; /* Couche de fond secondaire */
+    --text-color: #39FF14; /* Vert néon */
+    --accent: #FF00FF; /* Magenta néon */
+    --accent-hover: #00FFFF; /* Cyan néon */
+    --alert: #FF4500; /* Rouge vif */
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Press Start 2P', cursive; /* Police rétro pixel art */
     line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: none; /* Style pixelisé */
     min-height: 100vh;
     background-color: var(--main-bg-color);
     color: var(--text-color);
     display: flex;
     flex-direction: column;
+	/* align-items: center; */
 }
 
-/* BUILT-IN TAGS */
+/* TITRES ET TEXTES */
 
-li, a, button {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    text-decoration: none;
+h1, h2, h3, h4, h5, h6 {
+    color: var(--accent);
+    text-shadow: 2px 2px 0 #000000;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
+    color: var(--accent-hover); /* Cyan néon */
+    text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent); /* Ombre lumineuse */
+}
+
+p, li, a, button {
+    font-family: 'Press Start 2P', cursive;
     color: var(--text-color);
 }
 
@@ -151,16 +164,23 @@ header {
 }
 
 .logo {
-    cursor: pointer;
+    /* cursor: pointer;
     font-family: 'Roboto', sans-serif;
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--text-color);
-    margin-right: 12px;
+    margin-right: 12px; */
+	font-size: 1rem; /* Taille de police plus grande */
+    color: var(--text-color); /* Applique la couleur de texte (vert néon) */
+    text-decoration: none; /* Supprime la décoration par défaut (souligné) */
+    font-family: 'Press Start 2P', cursive; /* Police rétro pixel art */
+    transition: color 0.3s ease; /* Transition pour un effet de survol */
+
 }
 
 .logo:hover {
-    color: var(--accent);
+	color: var(--accent-hover); /* Cyan néon lors du survol */
+    text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent); /* Ombre lumineuse */
 }
 
 .nav_links {
@@ -175,11 +195,12 @@ header {
 
 .nav_links li a {
     color: var(--text-color);
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Transition pour couleur et ombre */
 }
 
 .nav_links li a:hover {
-    color: var(--accent);
+    color: var(--accent-hover); /* Cyan néon lors du survol */
+    text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent); /* Ombre lumineuse */
 }
 
 .user_pic {
@@ -273,7 +294,6 @@ header {
 
 /* LOGIN PAGE */
 
-
 .login_box {
     margin: auto;
     display: grid;
@@ -308,6 +328,17 @@ header {
     background-repeat: no-repeat;
     background-size: cover;
     border-right: 1px solid var(--accent);
+}
+
+.login_img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login_img img {
+    max-width: 100%; /* S'assure que l'image ne dépasse pas le conteneur */
+    height: auto;
 }
 
 .form {
