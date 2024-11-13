@@ -7,13 +7,15 @@
 {% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'users/styles.css' %}">
+<link rel="stylesheet" href="{% static 'users/main.css' %}">
 {% endblock%}
 
 {% block body %}
     <main class="login_box">
         <div class="login_img">
-            <img src="{% get_media_prefix %}pong.webp" alt="pong image">
+			 <!-- Application de la classe pong-img à l'image pour l'animation -->
+			<img class="pong-img" src="{% get_media_prefix %}pong.webp" alt="pong image">
+            <!-- <img src="{% get_media_prefix %}pong.webp" alt="pong image"> -->
         </div>
         <div class="form">
             <div>

@@ -170,18 +170,19 @@ header {
     font-weight: bold;
     color: var(--text-color);
     margin-right: 12px; */
-	font-size: 1rem; /* Taille de police plus grande */
+	font-size: 2rem; /* Taille de police plus grande */
     color: var(--text-color); /* Applique la couleur de texte (vert néon) */
     text-decoration: none; /* Supprime la décoration par défaut (souligné) */
     font-family: 'Press Start 2P', cursive; /* Police rétro pixel art */
-    transition: color 0.3s ease; /* Transition pour un effet de survol */
+    /* transition: color 0.3s ease; Transition pour un effet de survol */
+	animation: blink 2.5s infinite; /* Clignote */
 
 }
 
-.logo:hover {
-	color: var(--accent-hover); /* Cyan néon lors du survol */
-    text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent); /* Ombre lumineuse */
-}
+/* .logo:hover {
+	/* color: var(--accent-hover); Cyan néon lors du survol */
+    /* text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent); Ombre lumineuse
+} */
 
 .nav_links {
     list-style: none;
@@ -572,4 +573,62 @@ tbody tr:nth-child(odd) {
 
 tbody tr:hover {
     background-color: var(--accent);
+}
+
+/* Animation de clignotement et de changement de couleur */
+@keyframes blink {
+    0% { opacity: 1; color: #ff0000; }
+    50% { opacity: 0; color: #00ff00; }
+    100% { opacity: 1; color: #0000ff; }
+}
+
+/* Application de l'animation à l'élément */
+/* .blink-text {
+    font-size: 50px;
+    font-weight: bold;
+    animation: blink 1.5s infinite;
+} */
+
+/* Animation de l'image "Pong" */
+.pong-img {
+    display: block;
+    margin: 30px auto;
+    width: 250px;
+    animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    10% {
+        transform: translateY(-100px); /* Rebond vers le haut */
+    }
+    20% {
+        transform: translateY(20px); /* Rebond vers le bas */
+    }
+    30% {
+        transform: translateY(-80px); /* Rebond moyen vers le haut */
+    }
+	40% {
+        transform: translateY(20px); /* Rebond moyen vers le bas */
+    }
+	50% {
+        transform: translateY(-60px); /* Rebond moyen vers le haut */
+    }
+	60% {
+        transform: translateY(20px); /* Rebond moyen vers le bas */
+    }
+	70% {
+        transform: translateY(-40px); /* Rebond moyen vers le haut */
+	}
+	80% {
+        transform: translateY(20px); /* Rebond moyen vers le bas */
+    }
+	90% {
+        transform: translateY(-20px); /* Rebond moyen vers le haut */
+    }
+	100% {
+        transform: translateY(0);
+    }
 }
