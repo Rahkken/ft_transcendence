@@ -1,0 +1,17 @@
+psycopg2-binary
+django
+djangorestframework
+api
+django-crispy-forms
+crispy-bootstrap5
+# django-cors-headers
+# django-render-block
+# daphne
+# requests
+# python-dotenv
+# Pillow
+
+# Security Dependances
+argon2-cffi
+hvac
+sendgrid

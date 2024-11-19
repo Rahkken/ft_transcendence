@@ -1,0 +1,47 @@
+services:
+  db:
+    container_name: db
+    image: postgres
+    env_file: .env
+    volumes:
+        - .data/db:/var/lib/postgresql/data
+    restart: unless-stopped
+  
+  django:
+    container_name: django
+    build:
+      context: ./django
+    env_file: .env
+    volumes:
+      - ./django:/django
+    depends_on:
+      - db
+      - vault
+    
+  nginx:
+    container_name: nginx
+    image: owasp/modsecurity-crs:nginx-alpine
+    volumes:
+      - ./nginx/certs/selfsigned.crt:/etc/nginx/conf/server.crt
+      - ./nginx/certs/selfsigned.key:/etc/nginx/conf/server.key
+      - ./nginx/conf/nginx.conf:/etc/nginx/templates/nginx.conf.template
+      - ./nginx/conf/default.conf:/etc/nginx/templates/conf.d/default.conf.template
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - django
+    restart: unless-stopped
+
+  vault:
+    container_name: vault
+    build: 
+      context: ./vault
+    env_file: .env
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - ./vault/logs:/vault/logs
+    ports:
+      - "8200:8200"
+    entrypoint: /vault/entrypoint.sh

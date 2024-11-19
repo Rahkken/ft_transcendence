@@ -1,0 +1,21 @@
+{% load static %}
+
+<h1 class="text-center mb-4">Lobby !</h1>
+<div>
+    <form class="text-center mb-4" id="game-form" hx-post="lobby/" hx-target="#game-container" hx-swap="innerHTML">
+        {% csrf_token %}
+        
+        <label for="num_players">Select the number of players :</label>
+        <select id="num_players" name="num_players">
+            <option value="0">Play Local</option>
+            <option value="1">Play with AI</option>
+            <option value="2">2 Players</option>
+            <option value="3">3 Players</option>
+        </select>
+        
+        <button id="create-party-button" type="submit" class="btn btn-primary">Create Party</button>
+    </form>
+
+    <div id="game-container" class="mt-4">
+    </div>
+</div>
