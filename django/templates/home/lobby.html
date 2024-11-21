@@ -1,8 +1,9 @@
 {% load static %}
 
+<title>Lobby</title>
 <h1 class="text-center mb-4">Lobby !</h1>
 <div>
-    <form class="text-center mb-4" id="game-form" hx-post="lobby/" hx-target="#game-container" hx-swap="innerHTML">
+    <form class="text-center mb-4" id="game-form" hx-post="/api/lobby/" hx-target="#game-container" hx-swap="innerHTML">
         {% csrf_token %}
         
         <label for="num_players">Select the number of players :</label>

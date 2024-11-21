@@ -1,3 +1,22 @@
 {% load static %}
+{% load crispy_forms_tags %}
 
-<h1 class="text-center mb-4">Login !</h1>
+<script src="{% static 'js/login.js' %}"></script>
+
+<title>Login</title>
+<div class="login-container">
+    <h1>Login</h1>
+    <div id="error-messages" class="text-danger"></div>
+    <form id="login-form" onsubmit="submitLoginForm(event)">
+        {% csrf_token %}
+        <div>
+            <label for="id_username">Username</label>
+            <input type="text" name="username" id="id_username" required>
+        </div>
+        <div>
+            <label for="id_password">Password</label>
+            <input type="password" name="password" id="id_password" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Log In</button>
+    </form>
+</div>

@@ -26,14 +26,27 @@ async function submitSignupForm(event) {
         if (response.status === 201) {
             alert(result.message);
             window.location.href = result.redirect_url;
-        } else if (response.status === 400) {
-            const errorContainer = document.getElementById('error-messages');
-            errorContainer.innerHTML = '';
+        } 
+        else if (response.status === 400) {
+            const formFields = form.querySelectorAll('.form-group');
+            formFields.forEach((field) => {
+                const errorDiv = field.querySelector('.error-message');
+                if (errorDiv) {
+                    errorDiv.remove();
+                }
+            });
 
-            Object.entries(result.errors).forEach(([field, errors]) => {
-                const error = document.createElement('p');
-                error.textContent = `${field}: ${errors.join(', ')}`;
-                errorContainer.appendChild(error);
+            Object.entries(result.errors).forEach(([fieldName, errors]) => {
+                const inputField = form.querySelector(`[name="${fieldName}"]`);
+                if (inputField) {
+                    const formGroup = inputField.closest('.form-group');
+                    if (formGroup) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'error-message text-danger';
+                        errorDiv.textContent = errors.join(', ');
+                        formGroup.appendChild(errorDiv);
+                    }
+                }
             });
         }
     } catch (error) {

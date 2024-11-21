@@ -1,3 +1,11 @@
 {% load static %}
 
-<h1 class="text-center mb-4">Profile !</h1>
+<script src="{% static 'js/profile.js' %}"></script>
+
+<title>Profile</title>
+<button onclick="fetchUserProfile(username)">Profile</button>
+<body>
+    <div id="profile-container" hx-get="api/profile/{{ request.user.username }}">
+        <p>Loading profile data...</p>
+    </div>
+</body>
