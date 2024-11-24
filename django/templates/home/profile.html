@@ -3,9 +3,9 @@
 <script src="{% static 'js/profile.js' %}"></script>
 
 <title>Profile</title>
-<button onclick="fetchUserProfile(username)">Profile</button>
 <body>
-    <div id="profile-container" hx-get="api/profile/{{ request.user.username }}">
+    <div id="profile-container" username="{{ request.user.username }}">
         <p>Loading profile data...</p>
     </div>
+    <a hx-get="edit_profile/" hx-target="#main-content"><button class="cta">Update Account</button></a>
 </body>

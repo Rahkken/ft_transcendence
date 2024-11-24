@@ -1,26 +1,9 @@
-const profileContent = document.getElementById('profile-container');
-const username = getUsernameFromContext();
+fetchUserProfile();
 
-if (username) {
-    fetchUserProfile(username);
-} else {
-    console.error('Username not found.');
-    profileContent.innerHTML = '<p>Error: Unable to retrieve profile data.</p>';
-}
-
-function getUsernameFromContext() {
-    const profileDiv = document.getElementById('profile-container');
-    const hxGetValue = profileDiv.getAttribute('hx-get');
-
-    if (hxGetValue) {
-        const username = hxGetValue.split('/').pop();
-        return username;
-    }
-    return null;
-}
-
-async function fetchUserProfile(username) {
+async function fetchUserProfile() {
     try {
+        const profileDiv = document.getElementById('profile-container');
+        const username = profileDiv.getAttribute('username');
         const response = await fetch(`/api/profile/${username}/`, {
             method: 'GET',
             headers: {

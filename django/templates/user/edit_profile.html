@@ -1,0 +1,27 @@
+{% load static %}
+
+<script src="{% static 'js/edit_profile.js' %}"></script>
+
+<title>Edit Profile</title>
+<!-- <div id="profile-container">
+    <h1>Your Profile</h1>
+    <div id="profile-info">
+    </div>
+    <button id="edit-profile-btn">Edit Profile</button>
+
+    <div id="edit-profile-container" style="display: none;">
+        <form id="edit-profile-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+    <p id="message"></p>
+</div> -->
+<div id="edit-profile-container" username="{{ request.user.username }}">
+    <!-- Edit form will be dynamically loaded here -->
+</div>

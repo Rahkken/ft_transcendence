@@ -91,3 +91,41 @@ def logout_api(request):
         return JsonResponse({'message': 'Successfully logged out.', 'redirect_url': '/'}, status=200)
     else:
         return JsonResponse({'error': 'You are not logged in.'}, status=400)
+
+from .models import Profile
+from .forms import UserUpdateForm
+from django.contrib.auth.decorators import login_required
+
+def edit_profile_view(request):
+    return render(request, 'user/edit_profile.html')
+
+@login_required(login_url='/?redirected=true')
+@require_http_methods(["GET"])
+def get_profile_api(request):
+    """Retrieve the current user's profile as JSON."""
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    
+    data = {
+        'username': user.username,
+        'email': user.email,
+        'wins': profile.wins,
+        'losses': profile.losses,
+    }
+    return JsonResponse(data, status=200)
+
+def update_profile_api(request):
+    """Update the current user's profile using the provided forms."""
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+
+        if u_form.is_valid():
+            u_form.save()
+            return JsonResponse({'message': 'Profile updated successfully'}, status=200)
+        else:
+            errors = {
+                'user_errors': u_form.errors,
+            }
+            return JsonResponse({'errors': errors}, status=400)
+
+    return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
