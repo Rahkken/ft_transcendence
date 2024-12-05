@@ -1,4 +1,4 @@
-Welcome to the `ft_transcendence` project!
+Welcome to the `ft_transcendence` sfroidev project!
 
 ## Overview
 
